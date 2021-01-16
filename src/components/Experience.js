@@ -15,7 +15,14 @@ export default function Experience(){
     const classes = useStyles();
 
 
-
+    async function getDataXP(){
+        const response = await fetch("http://52.201.229.104/portfolio/experience");
+        const data = await response.json();
+        return data;
+    }
+    getDataXP().then( data => {
+        console.log(data);
+    });
 
     let experience = [
         {
