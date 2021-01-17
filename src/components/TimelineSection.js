@@ -10,6 +10,9 @@ import TimelineDot from '@material-ui/lab/TimelineDot';
 import Paper from '@material-ui/core/Paper';
 import LaptopMacIcon from '@material-ui/icons/LaptopMac';
 import Typography from '@material-ui/core/Typography';
+import WorkOutlineOutlinedIcon from '@material-ui/icons/WorkOutlineOutlined';
+
+
 export default function TimelineSection(props) {
     const classes = useStyles();
 
@@ -25,13 +28,13 @@ export default function TimelineSection(props) {
 
                 <TimelineSeparator>
                     <TimelineDot style={{backgroundColor: props.data.iconColor}}>
-                        {props.data.icon}
+                        <WorkOutlineOutlinedIcon className={classes.large}/>
                     </TimelineDot>
                     <TimelineConnector/>
                 </TimelineSeparator>
 
                 <TimelineContent>
-                    <Paper elevation={6} className={classes.paper}>
+                    <Paper elevation={10} className={classes.paper}>
                         <Typography variant="h6">
                             {props.data.title}
                         </Typography>
@@ -79,7 +82,8 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         padding: '16px 14px',
     },
-    secondaryTail: {
-        backgroundColor: theme.palette.secondary.main,
-    },
+    large: {
+        width: theme.spacing(7),
+        height: theme.spacing(7),
+    }
 }));

@@ -26,8 +26,8 @@ export default function Navbar(props) {
         <div>
             <List>
                 <ListItem className={classes.centered}>
-                    <Avatar className={classes.large} alt="Remy Sharp"
-                            src="https://lh3.googleusercontent.com/ogw/ADGmqu81dLsMRAhxAUFECmfRga-9AQ2kinv6KGJdDcjJhA=s83-c-mo"/>
+                    <Avatar className={classes.large} alt="CA"
+                            src={props.picture}/>
                 </ListItem>
             </List>
             <Divider/>

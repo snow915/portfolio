@@ -20,6 +20,7 @@ export default function Contact() {
     const [getPopoverMessage, setPopoverMessage] = useState(false);
     const [getMessageSended, setMessageSended] = useState(false);
     const [open, setOpen] = useState(false);
+    const [getButtonState, setButtonState] = useState(false);
 
     const handleClick = () => {
         setOpen(true);
@@ -36,9 +37,9 @@ export default function Contact() {
     const validations = text => {
         let id = text.target.id;
         text = text.target.value;
-        let stringPattern = /^[a-zA-Z ]{2,30}$/;
+        let stringPattern = /^[a-zA-ZáéíóúÁÉÍÓÚ ]{2,30}$/;
         let emailPattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
-        let specialCharacters = /^[a-zA-Z0-9!@#$% ^&*)(+=._-]{2,}$/g;
+        let specialCharacters = /^[a-zA-ZáéíóúÁÉÍÓÚ0-9!@#$% ^&*)(+=._-]{2,}$/g;
         if (id === "name") {
             !stringPattern.test(text) ? setNameError(true) : setNameError(false);
         } else if (id === "email") {
@@ -54,6 +55,7 @@ export default function Contact() {
     const sendEmail = e => {
         e.preventDefault();
         if (!(getNameError || getEmailError || getSubjectError || getMessageError)) {
+            setButtonState(true);
             const SERVICE_ID = "service_s5gozd6";
             const TEMPLATE_ID = "template_j8e13ge";
             const USER_ID = "user_QEM3fk6mtzpB3YMFBOY41";
@@ -65,20 +67,24 @@ export default function Contact() {
                         setPopoverMessage("Mensaje enviado exitosamente");
                         handleClick();
                         document.getElementById("contact-form").reset();
+                        setButtonState(false);
                     } else {
                         setMessageSended(false);
                         setPopoverMessage("No se pudo enviar tu mensaje, intenta de nuevo");
                         handleClick();
+                        setButtonState(false);
                     }
                 }, (error) => {
                     setMessageSended(false);
                     setPopoverMessage("Ocurrió un error, intenta de nuevo");
                     handleClick();
+                    setButtonState(false);
                 });
         } else {
             setMessageSended(false);
             setPopoverMessage("Revisa de nuevo los campos");
             handleClick();
+            setButtonState(false);
         }
 
     }
@@ -125,7 +131,7 @@ export default function Contact() {
                                        variant="outlined"/>
                         </Grid>
                         <Grid item xs={12}>
-                            <Button type="submit" variant="contained" size="large" color="primary"
+                            <Button type="submit" disabled={getButtonState} variant="contained" size="large" color="primary"
                                     className={useStyles().inputStyle}>
                                 Enviar mensaje
                             </Button>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {makeStyles} from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -11,6 +11,8 @@ import {Grid} from "@material-ui/core";
 import List from "@material-ui/core/List";
 import ListItem from '@material-ui/core/ListItem';
 import DevIcon from "devicon-react-svg";
+import LabelImportantIcon from '@material-ui/icons/LabelImportant';
+import axios from "axios";
 
 
 const Percentage = ({value}) => {
@@ -34,112 +36,13 @@ const Percentage = ({value}) => {
     )
 }
 
-const avatarsItems = [
-    {
-        title: 'React Native / React JS',
-        description: 'Web y móvil',
-        percentage: 50,
-        icon: 'react',
-        bgColor: '#212121',
-        style: {fill: "#5ED3F3", width: "150px"}
-    },
-    {
-        title: 'Android (Java)',
-        description: 'Móvil',
-        percentage: 40,
-        icon: 'android',
-        bgColor: '#73B232',
-        style: {fill: "white", width: "100px"}
-    },
-    {
-        title: 'Python',
-        description: 'Automatización y ciencia de datos',
-        percentage: 70,
-        icon: 'python',
-        bgColor: '#3470A0',
-        style: {fill: "#F7CB3F", width: "150px"}
-    },
-    {
-        title: 'Javascript',
-        description: 'Web y móvil',
-        percentage: 60,
-        icon: 'javascript',
-        bgColor: '#F7E018',
-        style: {fill: "black", width: "150px"}
-    },
-    {
-        title: 'PHP',
-        description: 'Web',
-        percentage: 65,
-        icon: 'php',
-        bgColor: '#7377AD',
-        style: {fill: "black", width: "150px"}
-    },
-    {
-        title: 'Debian GNU/Linux',
-        description: 'Uso personal y servidores',
-        percentage: 75,
-        icon: 'debian',
-        bgColor: '#white',
-        style: {fill: "#A3002F", width: "150px"}
-    },
-    {
-        title: 'HTML5',
-        description: 'Web',
-        percentage: 80,
-        icon: 'html5',
-        bgColor: '#F64A1D',
-        style: {fill: "white", width: "150px"}
-    },
-    {
-        title: 'CSS3',
-        description: 'Web',
-        percentage: 30,
-        icon: 'css3',
-        bgColor: '#3595CF',
-        style: {fill: "white", width: "150px"}
-    },
-    {
-        title: 'Bootstrap',
-        description: 'Web',
-        percentage: 80,
-        icon: 'bootstrap',
-        bgColor: '#533B78',
-        style: {fill: "white", width: "150px"}
-    },
-    {
-        title: 'MySQL',
-        description: 'Web',
-        percentage: 70,
-        icon: 'mysql',
-        bgColor: '#005168',
-        style: {fill: "white", width: "150px"}
-    },
-    {
-        title: 'Postgresql',
-        description: 'Web',
-        percentage: 65,
-        icon: 'postgresql',
-        bgColor: '#31648B',
-        style: {fill: "white", width: "150px"}
-    },
-    {
-        title: 'Firebase',
-        description: 'Web y móvil',
-        percentage: 45,
-        icon: 'firebase',
-        bgColor: '#0396DE',
-        style: {fill: "#F7C52C", width: "150px"}
-    },
-
-]
 
 const Item = ({item, index}) => {
     return (
         <ListItem key={index}>
             <ListItemAvatar>
                 <Avatar style={{backgroundColor: item.bgColor}} className={useStyles().large}>
-                    <DevIcon icon={item.icon} style={item.style}/>
+                    <DevIcon icon={item.icon} style={{fill: item.iconColor, width: "150px"}}/>
                 </Avatar>
             </ListItemAvatar>
             <ListItemText primary={item.title} secondary={item.description}/>
@@ -148,18 +51,31 @@ const Item = ({item, index}) => {
     );
 }
 
-let items = [[], []];
-avatarsItems.forEach(avatar => {
-    if (avatarsItems.indexOf(avatar) < avatarsItems.length / 2) {
-        items[0].push(avatar);
-    } else {
-        items[1].push(avatar)
-    }
-});
-
-
 export default function Technologies() {
     const classes = useStyles();
+    const [getFirstPart, setFirstPart] = useState([]);
+    const [getSecondPart, setSecondPart] = useState([]);
+    const [getTech, setTech] = useState(false);
+
+    const fillItems = (getTechnologies) => {
+        if(!getTech){
+            getTechnologies.forEach(avatar => {
+                if (getTechnologies.indexOf(avatar) < getTechnologies.length / 2) {
+                    setFirstPart(getFirstPart => [...getFirstPart, avatar]);
+                } else {
+                    setSecondPart(getSecondPart => [...getSecondPart, avatar]);
+                }
+            });
+        }
+    }
+
+    useEffect(() => {
+        axios.get("http://portfolioaugusto.000webhostapp.com/technologies/").then(response => {
+            fillItems(response.data);
+            setTech(true);
+        });
+    }, []);
+
 
     return (
         <Container fixed>
@@ -172,27 +88,54 @@ export default function Technologies() {
             </Typography>
 
             <Typography variant='body1'>
-                Las siguientes tecnologías son las que más he utilizado a lo largo de éste tiempo,
-                me gusta mucho el desarrollo de aplicaciones móviles y el desarrollo web
+                Las siguientes tecnologías son las que más he utilizado a lo largo de este tiempo,
+                me he dedicado más al desarrollo de aplicaciones móviles, desarrollo web y seguridad informática.
             </Typography>
-            <br/>
 
             <Grid container spacing={0}>
                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                     <List className={classes.root}>
-                        {items[0].map((avatar, index) => (
+                        {getFirstPart.map((avatar, index) => (
                             <Item item={avatar} key={index} index={index}/>
                         ))}
                     </List>
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                     <List className={classes.root}>
-                        {items[1].map((avatar, index) => (
+                        {getSecondPart.map((avatar, index) => (
                             <Item item={avatar} key={index} index={index}/>
                         ))}
                     </List>
                 </Grid>
             </Grid>
+
+            <Typography style={{marginBottom: 30, marginTop: 50}} variant='h6'>
+                Intereses
+            </Typography>
+            <Typography variant='body1'>
+                Me gusta siempre estar aprendiendo cosas nuevas que complementen mi conocimiento e ir mejorando mis
+                servicios.
+            </Typography>
+            <Grid container spacing={0}>
+                <Grid item xs={12}>
+                    <List>
+                        <ListItem>
+                            <ListItemAvatar>
+                                <LabelImportantIcon/>
+                            </ListItemAvatar>
+                            <ListItemText primary="Ciencia de datos"/>
+                        </ListItem>
+                        <ListItem>
+                            <ListItemAvatar>
+                                <LabelImportantIcon/>
+                            </ListItemAvatar>
+                            <ListItemText primary="Inteligencia artificial"/>
+                        </ListItem>
+                    </List>
+                </Grid>
+            </Grid>
+
+
         </Container>
     )
 }
@@ -201,7 +144,7 @@ export default function Technologies() {
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
-        maxWidth: 360,
+        maxWidth: 370,
         backgroundColor: theme.palette.background.paper,
     },
     large: {

@@ -22,100 +22,100 @@ const gotoSocialMedia = social => {
 }
 
 
-export default function About() {
+export default function About({personalData}) {
+    const classes = useStyles();
+
     return (
         <Container fixed>
-            <Grid container spacing={3}>
-                <Grid item xs={12}>
-                    <Typography style={{marginBottom: 30}} variant="h2">
-                        Acerca de mi
-                    </Typography>
+            {personalData.map((text, index) => (
+                <Grid container spacing={3} key={index}>
+                    <Grid item xs={12}>
+                        <Typography style={{marginBottom: 30}} variant="h2">
+                            Acerca de mi
+                        </Typography>
 
-                    <Typography paragraph>
-                        Desde que era niño me ha apasionado el mundo de la tecnología y siempre me he imaginado un mundo
-                        completamente automatizado e inteligente para poder tener una mejor calidad de vida, desde que
-                        empece
-                        mi carrera trato de mejorar al iniciar un nuevo proyecto, siempre tratando que el código sea
-                        escalable, entendible y ahorre la mayor cantidad de recursos de una computadora.
-                    </Typography>
-                </Grid>
-                <Grid item xs={12} md={4} lg={3} xl={3}>
-                    <img width='100%'
-                         src="https://lh3.googleusercontent.com/ogw/ADGmqu81dLsMRAhxAUFECmfRga-9AQ2kinv6KGJdDcjJhA=s83-c-mo" alt=""/>
-                </Grid>
-                <Grid item xs={12} md={8} lg={9} xl={9}>
-                    <Typography variant="h4">
-                        Desarrollador de aplicaciones moviles / web
-                    </Typography>
-
-                    <Grid container spacing={0}>
-                        <Grid item xs={12} md={6}>
-                            <List>
-                                <ListItem>
-                                    <ListItemAvatar>
-                                        <Avatar>
-                                            <Email color='action'/>
-                                        </Avatar>
-                                    </ListItemAvatar>
-                                    <ListItemText primary="Email : " secondary="armenta.augusto@gmail.com"/>
-                                </ListItem>
-
-                                <ListItem>
-                                    <ListItemAvatar>
-                                        <Avatar>
-                                            <Cake color='action'/>
-                                        </Avatar>
-                                    </ListItemAvatar>
-                                    <ListItemText primary="Fecha nacimiento" secondary="Enero 9, 1998 (23 años)"/>
-                                </ListItem>
-
-                            </List>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <List>
-                                <ListItem>
-                                    <ListItemAvatar>
-                                        <Avatar>
-                                            <Phone color='action'/>
-                                        </Avatar>
-                                    </ListItemAvatar>
-                                    <ListItemText primary="Celular" secondary="+52 1 241 215 5496"/>
-                                </ListItem>
-
-                                <ListItem>
-                                    <ListItemAvatar>
-                                        <Avatar>
-                                            <Code color='action'/>
-                                        </Avatar>
-                                    </ListItemAvatar>
-                                    <ListItemText primary="Carrera" secondary="Ing. TIC'S"/>
-                                </ListItem>
-
-                            </List>
-                        </Grid>
-
-                        <Grid item xs={12}>
-                            <div className={useStyles().root}>
-
-                                <Avatar style={{cursor: 'pointer', backgroundColor: '#0073B1'}}
-                                        className={useStyles().large}
-                                        onClick={() => gotoSocialMedia(0)}>
-                                    <LinkedIn color='inherit'/>
-                                </Avatar>
-
-                                <Avatar style={{cursor: 'pointer', backgroundColor: '#161414'}}
-                                        className={useStyles().large}
-                                        onClick={() => gotoSocialMedia(1)}>
-                                    <GitHub color='inherit'/>
-                                </Avatar>
-
-                            </div>
-
-                        </Grid>
+                        <Typography paragraph>
+                            {text.description}
+                        </Typography>
                     </Grid>
+                    <Grid item xs={12} md={4} lg={3} xl={3}>
+                        <img width='100%' src={text.picture} alt=""/>
+                    </Grid>
+                    <Grid item xs={12} md={8} lg={9} xl={9}>
+                        <Typography variant="h4">
+                            Desarrollador de aplicaciones móviles / web
+                        </Typography>
 
+                        <Grid container spacing={0}>
+                            <Grid item xs={12} md={6}>
+                                <List>
+                                    <ListItem>
+                                        <ListItemAvatar>
+                                            <Avatar>
+                                                <Email color='action'/>
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText primary="Email : " secondary={text.email}/>
+                                    </ListItem>
+
+                                    <ListItem>
+                                        <ListItemAvatar>
+                                            <Avatar>
+                                                <Cake color='action'/>
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText primary="Fecha nacimiento" secondary="Enero 9, 1998 (23 años)"/>
+                                    </ListItem>
+
+                                </List>
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                <List>
+                                    <ListItem>
+                                        <ListItemAvatar>
+                                            <Avatar>
+                                                <Phone color='action'/>
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText primary="Celular" secondary={text.phone}/>
+                                    </ListItem>
+
+                                    <ListItem>
+                                        <ListItemAvatar>
+                                            <Avatar>
+                                                <Code color='action'/>
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText primary="Carrera" secondary="Ing. TIC'S"/>
+                                    </ListItem>
+
+                                </List>
+                            </Grid>
+
+                            <Grid item xs={12}>
+                                <div className={classes.root}>
+
+                                    <Avatar style={{cursor: 'pointer', backgroundColor: '#0073B1'}}
+                                            className={classes.large}
+                                            onClick={() => gotoSocialMedia(0)}>
+                                        <LinkedIn color='inherit'/>
+                                    </Avatar>
+
+                                    <Avatar style={{cursor: 'pointer', backgroundColor: '#161414'}}
+                                            className={classes.large}
+                                            onClick={() => gotoSocialMedia(1)}>
+                                        <GitHub color='inherit'/>
+                                    </Avatar>
+
+                                </div>
+
+                            </Grid>
+                        </Grid>
+
+                    </Grid>
                 </Grid>
-            </Grid>
+            ))}
+
         </Container>
 
     )

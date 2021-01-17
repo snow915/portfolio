@@ -22,7 +22,7 @@ export default function Education() {
                     </Typography>
                     <br/>
                     <Typography variant='subtitle1'>
-                        Ingeniería en Tecnologias de la Información y Comunicación
+                        Ingeniería en Tecnologías de la Información y Comunicación
                     </Typography>
 
                     <Typography variant='subtitle2'>
