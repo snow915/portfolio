@@ -21,7 +21,7 @@ export default function App() {
     const [getPersonalData, setPersonalData] = useState([]);
 
     useEffect(() => {
-        axios.get("http://portfolioaugusto.000webhostapp.com/personal/").then(response => {
+        axios.get("https://portfolioaugusto.000webhostapp.com/personal/").then(response => {
             setPersonalData(response.data);
         });
     }, []);

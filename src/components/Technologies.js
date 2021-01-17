@@ -70,7 +70,7 @@ export default function Technologies() {
     }
 
     useEffect(() => {
-        axios.get("http://portfolioaugusto.000webhostapp.com/technologies/").then(response => {
+        axios.get("https://portfolioaugusto.000webhostapp.com/technologies/").then(response => {
             fillItems(response.data);
             setTech(true);
         });
